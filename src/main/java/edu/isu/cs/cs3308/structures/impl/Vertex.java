@@ -13,7 +13,7 @@ public class Vertex<V>
     {
         this.element = element;
         incomingList = new LinkedList<>();
-        incomingList = new LinkedList<>();
+        outgoingList = new LinkedList<>();
     }
 
     public V getElement()
@@ -31,5 +31,19 @@ public class Vertex<V>
         return outgoingList;
     }
 
-    //maybe add 'add' check functions for incoming or outgoing
+    public void addIncoming(Edge<V> toAdd)
+    {
+        if(toAdd != null && incomingList.contains(toAdd) == false)
+        {
+            incomingList.add(toAdd);
+        }
+    }
+
+    public void addOutgoing(Edge<V> toAdd)
+    {
+        if(toAdd != null && outgoingList.contains(toAdd) == false)
+        {
+            outgoingList.add(toAdd);
+        }
+    }
 }

@@ -1,5 +1,8 @@
 package edu.isu.cs.cs3308.structures;
 
+import edu.isu.cs.cs3308.structures.impl.Edge;
+import edu.isu.cs.cs3308.structures.impl.Vertex;
+
 import java.util.Iterator;
 
 /**
