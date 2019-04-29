@@ -38,8 +38,4 @@ public class Edge<V>
         return weight;
     }
 
-    public void setWeight(int weight)
-    {
-        this.weight = weight;
-    }
 }

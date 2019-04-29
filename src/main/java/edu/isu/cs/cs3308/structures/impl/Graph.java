@@ -8,9 +8,9 @@ public class Graph<E>
     private boolean isWeighted;
     private boolean isDirected;
     private List<Edge<E>> edgeList;
-    private List<Vertex<E>> vertexList;
+    private List<Vertex<E>> vertices;
 
-    public Graph(boolean isDirected, boolean isWeighted)
+    public Graph(boolean isWeighted, boolean isDirected)
     {
         this.isDirected = isDirected;
         this.isWeighted = isWeighted;
@@ -35,7 +35,7 @@ public class Graph<E>
             return;
         }
 
-        Edge<E> temp = new Edge(src, dest, weight);
+        Edge<E> temp = new Edge<>(src, dest, weight);
         if(edgeList.contains(temp) == false)
         {
             edgeList.add(temp);
@@ -45,7 +45,7 @@ public class Graph<E>
 
         if(getIsDirected() == false)
         {
-            Edge<E> opp = new Edge(dest, src);
+            Edge<E> opp = new Edge<>(dest, src);
             if(edgeList.contains(opp) == false)
             {
                 edgeList.add(opp);
@@ -85,13 +85,13 @@ public class Graph<E>
         Vertex<E> srcVert = findVert(src);
         if(srcVert == null)
         {
-            srcVert = new Vertex(src);
+            srcVert = new Vertex<>(src);
         }
 
         Vertex<E> destVert = findVert(dest);
         if(destVert == null)
         {
-            destVert = new Vertex(dest);
+            destVert = new Vertex<>(dest);
         }
 
         addEdge(srcVert, destVert, 1);
@@ -107,13 +107,13 @@ public class Graph<E>
         Vertex<E> srcVert = findVert(src);
         if(srcVert == null)
         {
-            srcVert = new Vertex(src);
+            srcVert = new Vertex<>(src);
         }
 
         Vertex<E> destVert = findVert(dest);
         if(destVert == null)
         {
-            destVert = new Vertex(dest);
+            destVert = new Vertex<>(dest);
         }
 
         addEdge(srcVert, destVert, weight);
@@ -123,7 +123,7 @@ public class Graph<E>
     {
         for(Edge<E> edge : edgeList)
         {
-            if(edge.getDestination().getElement().equals(element))
+            if(edge.getSource().getElement().equals(element))
             {
                 return edge.getSource();
             }
@@ -132,10 +132,10 @@ public class Graph<E>
                 return edge.getDestination();
             }
         }
-        System.out.println("Vertex not found/edge does not exist");
         return null;
     }
 
+    /*
     public void printVerticies()
     {
         List<Vertex<E>> vertices = getVertexList();
@@ -149,9 +149,10 @@ public class Graph<E>
     {
         for(Edge<E> edge : edgeList)
         {
-            System.out.println(edge.getSource().getElement() + " is headed to " + edge.getDestination().getElement() + " (" + edge.getWeight() + ")");
+            System.out.println(edge.getSource().getElement() + " -> " + edge.getDestination().getElement() + " (" + edge.getWeight() + ")");
         }
     }
+    */
 
     public void printAdjacents()
     {
@@ -161,7 +162,7 @@ public class Graph<E>
             for(Edge<E> edge : vertex.getOutgoingList())
             {
                 String weightBuffer = isWeighted ? " (" + edge.getWeight() + ")" : "";
-                System.out.println(edge.getSource().getElement().toString() + " is headed to " + edge.getDestination().getElement().toString() + weightBuffer);
+                System.out.println(edge.getSource().getElement().toString() + " -> " + edge.getDestination().getElement().toString() + weightBuffer);
             }
         }
     }

@@ -35,11 +35,14 @@ public class Driver
         {
             System.out.println("Unknown file");
         }
-        br.close();
+
+
+        UserInput();
+
 
     }
 
-    private String UserInput(BufferedReader br) throws IOException
+    private void UserInput() throws IOException
     {
         System.out.println(
                 "\nMENU\n" +
@@ -49,47 +52,41 @@ public class Driver
                         "3: Quit\n"
         );
         System.out.print("Enter your selection: ");
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String input = br.readLine();
-        br.close();
-        return input;
-    }
 
-    private void start(String input, BufferedReader br) throws IOException
-    {
-
-
-        if(input == "0")
+        if(!input.equals("0") && !input.equals("1") && !input.equals("2")&& !input.equals("3"))
         {
-            PrintConfig();
+            System.out.println("Unknown Command");
+            return;
         }
-        if(input == "1")
+        if(input.equals("0"))
+        {
+            graph.printAdjacents();
+        }
+        if(input.equals("1"))
         {
             GetRoutingTable(br);
         }
-        if(input == "2")
+        if(input.equals("2"))
         {
             GetShortestPath(br);
         }
-        if(input == "3")
+        if(input.equals("3"))
         {
             System.out.println("Quitting...");
         }
-        else
-        {
-            System.out.println("Unknown command");
-        }
+
     }
 
-    private void PrintConfig()
-    {
-        graph.printAdjacents();
-    }
+
 
     private void GetRoutingTable(BufferedReader br) throws IOException
     {
         System.out.print("\nEnter the node you want to view: ");
         String input = br.readLine();
         Vertex<String> src = graph.findVert(input);
+
         if(src == null)
         {
             System.out.println(input + " is invalid");
@@ -117,7 +114,6 @@ public class Driver
                 System.out.println(dest.getElement()+ " is next to " + path.get(1));
             }
         }
-        br.close();
 
     }
 
@@ -125,6 +121,7 @@ public class Driver
     {
         System.out.print("\nEnter your first node: ");
         String firstInput = br.readLine();
+
         Vertex<String> firstNode = graph.findVert(firstInput);
         if(firstNode == null)
         {

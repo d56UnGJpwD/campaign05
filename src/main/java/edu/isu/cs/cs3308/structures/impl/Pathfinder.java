@@ -22,7 +22,15 @@ public class Pathfinder
             cost = Integer.MAX_VALUE;
             pathIndex = -1;
         }
+
+        @Override
+        public String toString()
+        {
+            return "V[" + vertex + "] | isKnown: " + isKnown + " | Cost: " + cost + " | Path: " + pathIndex;
+        }
     }
+
+
 
     public <V> TableEntry[] Pathfinder(List<Vertex<V>> vertices, int startPos)
     {
@@ -33,6 +41,7 @@ public class Pathfinder
         }
 
         table[startPos].cost = 0;
+        table[startPos].pathIndex = startPos;
 
         Queue<Integer> queue = new PriorityQueue<>();
         queue.add(startPos);
@@ -79,25 +88,36 @@ public class Pathfinder
         List<V> list = new LinkedList<>();
         List<Vertex<V>> vertices = graph.getVertexList();
         TableEntry[][] data = getData(vertices);
+
         int srcIndex = vertices.indexOf(source);
         int destIndex = vertices.indexOf(destination);
 
-        TableEntry[] fromSrc = data[srcIndex];
+        TableEntry[] srcEntries = data[srcIndex];
         Stack<V> stack = new Stack<>();
-        TableEntry pathEntry = fromSrc[destIndex];
+        TableEntry pathEntry = srcEntries[destIndex];
+
         stack.push(vertices.get(pathEntry.vertex).getElement());
 
-        pathEntry = fromSrc[pathEntry.pathIndex];
-        V toInsert = vertices.get(pathEntry.vertex).getElement();
-        stack.push(toInsert);
+        try
+        {
+            pathEntry = srcEntries[pathEntry.pathIndex];
+        }
+        catch(Exception e)
+        {
 
-        pathEntry = fromSrc[pathEntry.pathIndex];
+        }
         V toAdd = vertices.get(pathEntry.vertex).getElement();
         stack.push(toAdd);
-
         while(pathEntry.vertex != srcIndex)
         {
-            pathEntry = fromSrc[pathEntry.pathIndex];
+            try
+            {
+                pathEntry = srcEntries[pathEntry.pathIndex];
+            }
+            catch(Exception e)
+            {
+
+            }
             toAdd = vertices.get(pathEntry.vertex).getElement();
             stack.push(toAdd);
         }

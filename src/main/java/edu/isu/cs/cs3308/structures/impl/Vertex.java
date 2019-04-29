@@ -33,7 +33,7 @@ public class Vertex<V>
 
     public void addIncoming(Edge<V> toAdd)
     {
-        if(toAdd != null && incomingList.contains(toAdd) == false)
+        if(toAdd != null && outgoingList.contains(toAdd) == false)
         {
             incomingList.add(toAdd);
         }
