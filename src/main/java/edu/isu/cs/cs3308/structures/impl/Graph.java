@@ -57,10 +57,117 @@ public class Graph<E>
 
     }
 
+    public List<Vertex<E>> getVertexList()
+    {
+        List<Vertex<E>> vertices = new LinkedList<>();
+
+        for(Edge<E> edge : edgeList)
+        {
+            if(vertices.contains(edge.getSource()) == false)
+            {
+                vertices.add(edge.getSource());
+            }
+            if(vertices.contains(edge.getDestination()) == false)
+            {
+                vertices.add((edge.getDestination()));
+            }
+        }
+        return vertices;
+    }
+
     public void addUnweightedEdge(E src, E dest)
     {
         if(src == null || dest == null)
+        {
+            return;
+        }
+
+        Vertex<E> srcVert = findVert(src);
+        if(srcVert == null)
+        {
+            srcVert = new Vertex(src);
+        }
+
+        Vertex<E> destVert = findVert(dest);
+        if(destVert == null)
+        {
+            destVert = new Vertex(dest);
+        }
+
+        addEdge(srcVert, destVert, 1);
+    }
+
+    public void addWeightedEdge(E src, E dest, int weight)
+    {
+        if(src == null || dest == null)
+        {
+            return;
+        }
+
+        Vertex<E> srcVert = findVert(src);
+        if(srcVert == null)
+        {
+            srcVert = new Vertex(src);
+        }
+
+        Vertex<E> destVert = findVert(dest);
+        if(destVert == null)
+        {
+            destVert = new Vertex(dest);
+        }
+
+        addEdge(srcVert, destVert, weight);
+    }
+
+    public Vertex<E> findVert(E element)
+    {
+        for(Edge<E> edge : edgeList)
+        {
+            if(edge.getDestination().getElement().equals(element))
+            {
+                return edge.getSource();
+            }
+            if(edge.getDestination().getElement().equals(element))
+            {
+                return edge.getDestination();
+            }
+        }
+        System.out.println("Vertex not found/edge does not exist");
+        return null;
+    }
+
+    public void printVerticies()
+    {
+        List<Vertex<E>> vertices = getVertexList();
+        for(Vertex<E> vertex : vertices)
+        {
+            System.out.println(vertex.getElement().toString());
+        }
+    }
+
+    public void printEdges()
+    {
+        for(Edge<E> edge : edgeList)
+        {
+            System.out.println(edge.getSource().getElement() + " is headed to " + edge.getDestination().getElement() + " (" + edge.getWeight() + ")");
+        }
+    }
+
+    public void printAdjacents()
+    {
+        List<Vertex<E>> vertices = getVertexList();
+        for(Vertex<E> vertex : vertices)
+        {
+            for(Edge<E> edge : vertex.getOutgoingList())
+            {
+                String weightBuffer = isWeighted ? " (" + edge.getWeight() + ")" : "";
+                System.out.println(edge.getSource().getElement().toString() + " is headed to " + edge.getDestination().getElement().toString() + weightBuffer);
+            }
+        }
     }
 
 
+
 }
+
+
