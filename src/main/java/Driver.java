@@ -3,11 +3,9 @@ import edu.isu.cs.cs3308.structures.impl.Graph;
 import edu.isu.cs.cs3308.structures.impl.Pathfinder;
 import edu.isu.cs.cs3308.structures.impl.Vertex;
 
-import javax.annotation.processing.SupportedSourceVersion;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.file.Path;
 import java.util.List;
 
 public class Driver
@@ -17,6 +15,7 @@ public class Driver
         new Driver();
     }
 
+    //hardcoded defaults used during testing
     private String currentFile = "data/test.graph";
     private Graph<String> graph;
 
@@ -154,8 +153,6 @@ public class Driver
                 System.out.println(node + " ->");
             }
         }
-
-
 
     }
 

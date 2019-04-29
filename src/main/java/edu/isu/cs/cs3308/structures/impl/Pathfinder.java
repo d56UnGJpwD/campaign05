@@ -8,12 +8,15 @@ import java.util.*;
 //https://google.github.io/guava/releases/19.0/api/diffs/changes/com.google.common.collect.Table.html
 public class Pathfinder
 {
+
     public class TableEntry
     {
+        //cost is total distance covered
         int vertex;
         boolean isKnown;
         int cost;
         int pathIndex;
+
 
         public TableEntry(int index)
         {
@@ -23,15 +26,10 @@ public class Pathfinder
             pathIndex = -1;
         }
 
-        @Override
-        public String toString()
-        {
-            return "V[" + vertex + "] | isKnown: " + isKnown + " | Cost: " + cost + " | Path: " + pathIndex;
-        }
     }
 
 
-
+    //returns a table entry containing path information for the list of vertices
     public <V> TableEntry[] Pathfinder(List<Vertex<V>> vertices, int startPos)
     {
         TableEntry[] table = new TableEntry[vertices.size()];
@@ -43,6 +41,7 @@ public class Pathfinder
         table[startPos].cost = 0;
         table[startPos].pathIndex = startPos;
 
+        //uses a queue to begin pathfinding
         Queue<Integer> queue = new PriorityQueue<>();
         queue.add(startPos);
 
@@ -59,6 +58,7 @@ public class Pathfinder
                 {
                     queue.add(destIndex);
                 }
+                //checks costs with weights and finds the saves it
                 if(table[destIndex].cost > edge.getWeight() + sourceCost)
                 {
                     table[destIndex].cost = edge.getWeight() + sourceCost;
@@ -72,6 +72,7 @@ public class Pathfinder
         return table;
     }
 
+    //returns a table entry of data used in findShortestPath
     public <V> TableEntry[][] getData(List<Vertex<V>> vertices)
     {
         int size = vertices.size();
@@ -85,6 +86,7 @@ public class Pathfinder
 
     public <V> List<V> findShortestPath(Graph<V> graph, Vertex<V> source, Vertex<V> destination)
     {
+        //creates a copy of hte graph vertex list
         List<V> list = new LinkedList<>();
         List<Vertex<V>> vertices = graph.getVertexList();
         TableEntry[][] data = getData(vertices);
@@ -93,6 +95,7 @@ public class Pathfinder
         int destIndex = vertices.indexOf(destination);
 
         TableEntry[] srcEntries = data[srcIndex];
+        // and uses a stack to reverse the queue used earlier
         Stack<V> stack = new Stack<>();
         TableEntry pathEntry = srcEntries[destIndex];
 
@@ -119,19 +122,18 @@ public class Pathfinder
 
             }
             toAdd = vertices.get(pathEntry.vertex).getElement();
+
             stack.push(toAdd);
         }
 
         while(stack.isEmpty() == false)
         {
+            //add it back to the proper position
             list.add(stack.pop());
         }
 
         return list;
     }
-
-
-
 
 
 }

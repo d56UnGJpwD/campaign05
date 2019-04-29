@@ -2,6 +2,7 @@ package edu.isu.cs.cs3308.structures.impl;
 
 public class Edge<V>
 {
+    //has a source vertex, an destination vertex, and its weight
     private Vertex<V> source;
     private Vertex<V> destination;
     private int weight;
@@ -15,6 +16,7 @@ public class Edge<V>
         weight = 1;
     }
 
+    //another constructor that has a weight parameter
     public Edge(Vertex<V> source, Vertex<V> destination, int weight)
     {
         this.source = source;

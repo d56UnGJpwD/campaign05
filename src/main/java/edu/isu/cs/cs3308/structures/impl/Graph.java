@@ -5,6 +5,8 @@ import java.util.List;
 
 public class Graph<E>
 {
+    //has booleans for if it is weighted or directed
+    //along with a list of edges and vertices
     private boolean isWeighted;
     private boolean isDirected;
     private List<Edge<E>> edgeList;
@@ -28,6 +30,7 @@ public class Graph<E>
         return isWeighted;
     }
 
+    //adds and edge to the edgelist if src and dest are not null
     private void addEdge(Vertex<E> src, Vertex<E> dest, int weight)
     {
         if(src == null||dest==null)
@@ -35,7 +38,9 @@ public class Graph<E>
             return;
         }
 
+        //creates the new edge
         Edge<E> temp = new Edge<>(src, dest, weight);
+        //if it is not already in the list, then add it it
         if(edgeList.contains(temp) == false)
         {
             edgeList.add(temp);
@@ -43,6 +48,7 @@ public class Graph<E>
             dest.addIncoming(temp);
         }
 
+        //if the edge is not directed create an opposite edge and add it
         if(getIsDirected() == false)
         {
             Edge<E> opp = new Edge<>(dest, src);
@@ -57,6 +63,7 @@ public class Graph<E>
 
     }
 
+    //creats a list of vertices and returns it
     public List<Vertex<E>> getVertexList()
     {
         List<Vertex<E>> vertices = new LinkedList<>();
@@ -75,6 +82,8 @@ public class Graph<E>
         return vertices;
     }
 
+
+    //an unweighted edge uses the addEdge helper function with a weight of 1
     public void addUnweightedEdge(E src, E dest)
     {
         if(src == null || dest == null)
@@ -97,6 +106,7 @@ public class Graph<E>
         addEdge(srcVert, destVert, 1);
     }
 
+    //weighted edge does the pre add edge checks and passes through its weight
     public void addWeightedEdge(E src, E dest, int weight)
     {
         if(src == null || dest == null)
@@ -119,6 +129,8 @@ public class Graph<E>
         addEdge(srcVert, destVert, weight);
     }
 
+
+    //searches all the edges in the edgelist for the provided vertex
     public Vertex<E> findVert(E element)
     {
         for(Edge<E> edge : edgeList)
@@ -137,6 +149,7 @@ public class Graph<E>
 
     /*
     //bug checking
+
     public void printVerticies()
     {
         List<Vertex<E>> vertices = getVertexList();
@@ -155,6 +168,7 @@ public class Graph<E>
     }
     */
 
+    //prints Current Network Configuration
     public void printAdjacents()
     {
         List<Vertex<E>> vertices = getVertexList();
