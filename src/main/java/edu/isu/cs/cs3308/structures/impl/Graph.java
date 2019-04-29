@@ -136,6 +136,7 @@ public class Graph<E>
     }
 
     /*
+    //bug checking
     public void printVerticies()
     {
         List<Vertex<E>> vertices = getVertexList();

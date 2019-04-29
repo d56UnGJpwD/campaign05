@@ -62,6 +62,7 @@ public class Driver
         }
         if(input.equals("0"))
         {
+            System.out.println("\nCURRENT NETWORK CONFIGURATION: \n");
             graph.printAdjacents();
         }
         if(input.equals("1"))
@@ -93,7 +94,8 @@ public class Driver
             return;
         }
 
-        System.out.println("Finding....");
+        System.out.println("\n"+ input + " ROUTING TABLE\n");
+        System.out.println("DESTINATION    | NEXT\n");
         Pathfinder pathfinder = new Pathfinder();
         List<Vertex<String>> vertices = graph.getVertexList();
         for(Vertex<String> dest : vertices)
@@ -111,7 +113,7 @@ public class Driver
             }
             else
             {
-                System.out.println(dest.getElement()+ " is next to " + path.get(1));
+                System.out.println(dest.getElement()+ " | " + path.get(1));
             }
         }
 
@@ -129,7 +131,7 @@ public class Driver
             return;
         }
 
-        System.out.println("\nEnter your second node: ");
+        System.out.print("\nEnter your second node: ");
         String secondInput = br.readLine();
         Vertex<String> secondNode = graph.findVert(secondInput);
         if(secondNode == null)
@@ -149,7 +151,7 @@ public class Driver
         {
             for(String node : path)
             {
-                System.out.println(node);
+                System.out.println(node + " ->");
             }
         }
 
